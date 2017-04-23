@@ -109,7 +109,7 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 //Routes
 const routes = require('./routes/routes');
 app.use('/', routes);
-app.use('/app', express.static(__dirname + '/app'));
+app.use('/app', express.static(__dirname + '/app/app'));
 
 /**
  * Error Handler.
