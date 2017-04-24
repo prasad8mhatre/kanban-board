@@ -2,21 +2,33 @@
 <html ng-app="kanbanApp">
 
 <head>
-    <meta charset="utf-8">
-    <title>kanbanApp</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/home/homeCtrl.js"></script>
+  <meta charset="utf-8">
+  <title>kanbanApp</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+
+  <!-- stylsheets -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css">
+
+  <!-- javascript -->
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="bower_components/angular-breadcrumb/dist/angular-breadcrumb.min.js"></script>
+  <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+
+  <!-- Project files -->
+  <script src="scripts/app.js"></script>
+  <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/controllers/home/homeCtrl.js"></script>
+  <script src="scripts/controllers/home/teamsCtrl.js"></script>
+  <script src="scripts/controllers/home/boardsCtrl.js"></script>
+  <script src="scripts/controllers/home/boardCtrl.js"></script>
 </head>
 
-<body>
-    <div ui-view></div>
+<body ng-controller="MainCtrl">
+  <div ui-view></div>
 </body>
 
 </html>

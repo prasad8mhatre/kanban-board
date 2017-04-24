@@ -13,7 +13,7 @@ var BoardSchema = new Schema({
   updatedBy : { type: String },
   createdDate :  Date,
   updatedDate : Date,
-  Lists : [{ type: Schema.Types.ObjectId, ref: 'List' }],
+  lists : [{ type: Schema.Types.ObjectId, ref: 'List' }],
   orderedOn : { type: String }
 
 });

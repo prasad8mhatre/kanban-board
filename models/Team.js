@@ -1,6 +1,5 @@
 'use strict';
 
-const User = require('./User');
 const Board =  require('./Board');
 
 var mongoose = require('mongoose'),
@@ -16,7 +15,7 @@ var TeamSchema = new Schema({
   updatedBy : { type: String },
   createdDate :  Date,
   updatedDate : Date,
-  Boards : [{ type: Schema.Types.ObjectId, ref: 'Board' }]
+  boards : [{ type: Schema.Types.ObjectId, ref: 'Board' }]
 
 });
 

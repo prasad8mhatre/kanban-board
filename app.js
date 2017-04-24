@@ -107,12 +107,6 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
 //Routes
-/*
-var router = express.Router();
-app.use(router);
-require('./routes/api')(router);
-*/
-
 const routes = require('./routes/routes');
 const api = require('./routes/api');
 app.use('/', routes);

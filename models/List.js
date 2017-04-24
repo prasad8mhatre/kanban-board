@@ -14,7 +14,7 @@ var ListSchema = new Schema({
   updatedBy : { type: String },
   createdDate :  Date,
   updatedDate : Date,
-  Cards : [{ type: Schema.Types.ObjectId, ref: 'Card' }],
+  cards : [{ type: Schema.Types.ObjectId, ref: 'Card' }],
   position : Number
 
 });

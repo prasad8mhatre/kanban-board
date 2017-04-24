@@ -1,0 +1,34 @@
+<style>
+  .padding {
+    padding: 20px;
+  }
+
+  .padding-right {
+    padding-right: 20px;
+  }
+
+  .margin {
+    margin: 5px;
+  }
+</style>
+
+<div ui-view>
+<h3>Board <span class="glyphicon glyphicon-plus" ng-click="addTeam()"></span></h3>
+<div class="row">
+  <div ng-repeat="board in boards" class="col-md-4">
+    <div class="card text-center padding margin" style="background:#ebebeb; ">
+      <div class="card-header">
+        {{board}} <span class="pull-right glyphicon glyphicon-trash "></span><span class="pull-right padding-right glyphicon glyphicon-pencil"></span>
+      </div>
+      <div class="card-block">
+        <h4 class="card-title">Manage board</h4>
+        <p class="card-text">Create, Delete, View your board.</p>
+        <a ui-sref="app.home.teams.boards.board" class="btn btn-primary">Explore board</a>
+      </div>
+      <div class="card-footer text-muted">
+        2 days ago
+      </div>
+    </div>
+  </div>
+</div>
+</div>

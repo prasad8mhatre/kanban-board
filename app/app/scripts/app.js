@@ -9,7 +9,9 @@
  * Main module of the application.
  */
 var app = angular.module('kanbanApp', [
-    'ui.router'
+    'ui.router',
+    'ncy-angular-breadcrumb',
+    'angular-loading-bar'
 ]);
 
 
@@ -31,26 +33,61 @@ app.config(['$httpProvider', function($httpProvider) {
 app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('app', {
         url: '/app',
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        templateUrl: 'views/main.html'
     });
 
     $stateProvider.state('app.home', {
         url: '/home',
         templateUrl: 'views/home/home.html',
-        controller: 'HomeCtrl',
         data: {
             title: 'Home'
+        },
+        ncyBreadcrumb: {
+          label: 'Home'
         }
-    });
-
-
-     $stateProvider.state('app.home.teams', {
+    }).state('app.home.teams', {
         url: '/teams',
         templateUrl: 'views/home/teams.html',
         controller: 'TeamsCtrl',
         data: {
             title: 'Teams'
+        },
+        ncyBreadcrumb: {
+          label: 'Team'
+        }
+    });
+
+    $stateProvider.state('app.home.teams.boards', {
+        url: '/boards',
+        templateUrl: 'views/home/boards.html',
+        controller: 'BoardsCtrl',
+        data: {
+            title: 'Boards'
+        },
+        ncyBreadcrumb: {
+          label: 'Boards'
+        }
+    }).state('app.home.teams.boards.board', {
+          url: '/board',
+          templateUrl: 'views/home/board.html',
+          controller: 'BoardCtrl',
+          data: {
+              title: 'Board'
+          },
+          ncyBreadcrumb: {
+            label: 'Board'
+          }
+      });;
+
+
+    $stateProvider.state('app.dash', {
+        url: '/dash',
+        templateUrl: 'views/home/dash.html',
+        data: {
+            title: 'Dash'
+        },
+        ncyBreadcrumb: {
+          label: 'Dash'
         }
     });
 
