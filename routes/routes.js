@@ -5,7 +5,6 @@ const passportConfig = require('../config/passport');
 
 const homeController = require('../controllers/home');
 const userController = require('../controllers/user');
-const microserviceController = require('../controllers/microservice');
 
 //homeController
 app.get('/', homeController.index);
