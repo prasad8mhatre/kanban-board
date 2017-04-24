@@ -25,13 +25,34 @@ exports.get = function (req, res) {
 };
 
 exports.getAllOrderby = function (req, res) {
-    Card.find().sort({date:-1}, function(err, result){
+    var orderType = req.query.orderType;
+    var order = req.query.order;
+    var sort = "{\"" + orderType + "\":\"" +  order + "\"}";
+    console.log(sort); 
+
+    Card.find().sort(JSON.parse(sort)).find(function (err, result) {
         if (!err) {
             return res.json(result);
         } else {
             return res.send(err); // 500 error
         }
     });
+
+    // Card.find({}).sort({createdDate: -1}).execFind(function(err,result){
+    //     if (!err) {
+    //         return res.json(result);
+    //     } else {
+    //         return res.send(err); // 500 error
+    //     }
+    // });
+/*
+    Card.find().sort({createdDate:-1}, function(err, result){
+        if (!err) {
+            return res.json(result);
+        } else {
+            return res.send(err); // 500 error
+        }
+    });*/
 };
 
 exports.getAll = function (req, res) {

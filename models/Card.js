@@ -13,8 +13,8 @@ var CardSchema = new Schema({
   updatedBy : { type: String },
   createdDate :  Date,
   updatedDate : Date,
-  DueDate : Date,
-  Priority : Number
+  dueDate : Date,
+  priority : Number
 
 });
 

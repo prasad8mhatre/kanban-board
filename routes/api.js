@@ -47,6 +47,8 @@ app.delete('/list/:id', passportConfig.isAuthenticated, ListController.delete);
 app.post('/card', passportConfig.isAuthenticated, CardController.create);
 app.get('/card/:id', passportConfig.isAuthenticated, CardController.get);
 app.get('/card', passportConfig.isAuthenticated, CardController.getAll);
+app.get('/cardbydate', passportConfig.isAuthenticated, CardController.getAllOrderby);
+
 app.put('/card/:id', passportConfig.isAuthenticated, CardController.update);
 app.delete('/card/:id', passportConfig.isAuthenticated, CardController.delete);
 
