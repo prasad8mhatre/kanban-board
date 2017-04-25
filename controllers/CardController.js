@@ -5,6 +5,8 @@ var Card = require('../models/Card').Card;
 exports.create = function (req, res) {
     req.body.createdBy = req.user.email;
     req.body.updatedBy = req.user.email;
+    req.body.createdDate = new Date();
+    req.body.updatedDate = new Date();
     Card.create(req.body, function(err, result) {
         if (!err) {
             return res.json(result);
@@ -28,7 +30,7 @@ exports.getAllOrderby = function (req, res) {
     var orderType = req.query.orderType;
     var order = req.query.order;
     var sort = "{\"" + orderType + "\":\"" +  order + "\"}";
-    console.log(sort); 
+    console.log(sort);
 
     Card.find().sort(JSON.parse(sort)).find(function (err, result) {
         if (!err) {

@@ -116,6 +116,7 @@ app.controller('EditBoardCtrl', ['$scope', '$state', '$uibModalInstance', 'Entit
   function($scope, $state, $uibModalInstance, EntityService, $timeout, board) {
     $scope.board = board;
     $scope.entity = "board";
+    debugger;
     $scope.ok = function(newboard) {
       if (angular.isUndefined(newboard.name) && angular.isUndefined(newboard.description)) {
         $scope.error = "Please Enter Name and description!";
@@ -125,6 +126,7 @@ app.controller('EditBoardCtrl', ['$scope', '$state', '$uibModalInstance', 'Entit
         }, 5000);
       } else {
         $scope.board = newboard;
+        debugger;
         EntityService.update($scope.entity, $scope.board._id, $scope.board)
           .then(function(resp) {
             $uibModalInstance.dismiss('cancel');

@@ -30,6 +30,7 @@ TeamSchema.statics = {
         this.find(query, callback);
     },
     updateById: function(id, updateData, callback) {
+        updateData.updatedDate = new Date();
         this.update(id, {$set: updateData}, callback);
     },
     remove: function(query, callback) {
@@ -37,8 +38,6 @@ TeamSchema.statics = {
     },
     create: function(data, callback) {
         var team = new this(data);
-        team.createdDate = new Date();
-        team.updatedDate = new Date();
         team.save(callback);
     }
 }

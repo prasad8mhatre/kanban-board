@@ -5,6 +5,8 @@ var Team = require('../models/Team').Team;
 exports.create = function(req, res) {
   req.body.createdBy = req.user.email;
   req.body.updatedBy = req.user.email;
+  req.body.createdDate = new Date();
+  req.body.updatedDate = new Date();
   Team.create(req.body, function(err, result) {
     if (!err) {
       return res.json(result);

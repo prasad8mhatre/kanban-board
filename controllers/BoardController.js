@@ -5,6 +5,8 @@ var Board = require('../models/Board').Board;
 exports.create = function(req, res) {
   req.body.createdBy = req.user.email;
   req.body.updatedBy = req.user.email;
+  req.body.createdDate = new Date();
+  req.body.updatedDate = new Date();
   Board.create(req.body, function(err, result) {
     if (!err) {
       return res.json(result);
@@ -29,13 +31,16 @@ exports.get = function(req, res) {
 };
 
 exports.getAll = function(req, res) {
-  Board.getAll({teamId : req.params.teamId}, function(err, result) {
+  Board.find({teamId: req.params.teamId}).sort({
+    updatedDate: -1
+  }).find(function(err, result) {
     if (!err) {
       return res.json(result);
     } else {
       return res.send(err); // 500 error
     }
   });
+
 };
 
 exports.update = function(req, res) {
@@ -46,6 +51,7 @@ exports.update = function(req, res) {
       return res.send(err); // 500 error
     }
   });
+
 }
 
 exports.delete = function(req, res) {

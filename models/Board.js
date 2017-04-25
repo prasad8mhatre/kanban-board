@@ -29,6 +29,7 @@ BoardSchema.statics = {
         this.find(query, callback);
     },
     updateById: function(id, updateData, callback) {
+        //updateData.updatedDate = new Date();
         this.update(id, {$set: updateData}, callback);
     },
     remove: function(removeData, callback) {
@@ -36,8 +37,6 @@ BoardSchema.statics = {
     },
     create: function(data, callback) {
         var board = new this(data);
-        board.createdDate = new Date();
-        board.updatedDate = new Date();
         board.save(callback);
     }
 }

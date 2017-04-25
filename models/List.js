@@ -30,6 +30,7 @@ ListSchema.statics = {
         this.find(query, callback);
     },
     updateById: function(id, updateData, callback) {
+        updateData.updatedDate = new Date();
         this.update(id, {$set: updateData}, callback);
     },
     remove: function(removeData, callback) {
@@ -37,8 +38,6 @@ ListSchema.statics = {
     },
     create: function(data, callback) {
         var list = new this(data);
-        list.createdDate = new Date();
-        list.updatedDate = new Date();
         list.save(callback);
     }
 }

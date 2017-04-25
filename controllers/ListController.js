@@ -5,6 +5,8 @@ var List = require('../models/List').List;
 exports.create = function(req, res) {
   req.body.createdBy = req.user.email;
   req.body.updatedBy = req.user.email;
+  req.body.createdDate = new Date();
+  req.body.updatedDate = new Date();
   List.create(req.body, function(err, result) {
     if (!err) {
       return res.json(result);
