@@ -23,7 +23,7 @@ app.delete('/team/:id', passportConfig.isAuthenticated, TeamController.delete);
 //Board
 app.post('/board', passportConfig.isAuthenticated, BoardController.create);
 app.get('/board/:id', passportConfig.isAuthenticated, BoardController.get);
-app.get('/board', passportConfig.isAuthenticated, BoardController.getAll);
+app.get('/board/getAll/:teamId', passportConfig.isAuthenticated, BoardController.getAll);
 app.put('/board/:id', passportConfig.isAuthenticated, BoardController.update);
 app.delete('/board/:id', passportConfig.isAuthenticated, BoardController.delete);
 
@@ -45,7 +45,3 @@ app.delete('/card/:id', passportConfig.isAuthenticated, CardController.delete);
 
 
 module.exports = app;
-
-
-
-

@@ -22,7 +22,7 @@ var TeamSchema = new Schema({
 
 TeamSchema.statics = {
 
-     
+
     get: function(query, callback) {
         this.findOne(query, callback);
     },
@@ -32,11 +32,13 @@ TeamSchema.statics = {
     updateById: function(id, updateData, callback) {
         this.update(id, {$set: updateData}, callback);
     },
-    remove: function(removeData, callback) {
-         this.remove(removeData, callback);
+    remove: function(query, callback) {
+         this.remove(query, callback);
     },
     create: function(data, callback) {
         var team = new this(data);
+        team.createdDate = new Date();
+        team.updatedDate = new Date();
         team.save(callback);
     }
 }

@@ -1,34 +1,76 @@
-<style>
-  .padding {
-    padding: 20px;
-  }
-
-  .padding-right {
-    padding-right: 20px;
-  }
-
-  .margin {
-    margin: 5px;
-  }
-</style>
-
 <div ui-view>
-<h3>Board <span class="glyphicon glyphicon-plus" ng-click="addTeam()"></span></h3>
-<div class="row">
-  <div ng-repeat="board in boards" class="col-md-4">
-    <div class="card text-center padding margin" style="background:#ebebeb; ">
-      <div class="card-header">
-        {{board}} <span class="pull-right glyphicon glyphicon-trash "></span><span class="pull-right padding-right glyphicon glyphicon-pencil"></span>
-      </div>
-      <div class="card-block">
-        <h4 class="card-title">Manage board</h4>
-        <p class="card-text">Create, Delete, View your board.</p>
-        <a ui-sref="app.home.teams.boards.boardsDetails({boardId:board})" class="btn btn-primary">Explore board</a>
-      </div>
-      <div class="card-footer text-muted">
-        2 days ago
+  <h3>Board <span class="glyphicon glyphicon-plus cursor" ng-click="addBoard()"></span></h3>
+  <div class="row">
+    <div ng-repeat="board in boards" class="col-md-4">
+      <div class="card text-center padding margin" style="background:#ebebeb; ">
+        <div class="card-header">
+          <span class="pull-right glyphicon glyphicon-trash cursor" ng-click="deleteBoard(board)"></span><span class="pull-right padding-right glyphicon glyphicon-pencil cursor" ng-click="editBoard(board)"></span>
+        </div>
+        <div class="card-block">
+          <h3 for="">{{board.name}}</h3>
+          <h5 class="card-text">{{board.description}}</h5>
+          <a ui-sref="app.home.teams.boards.boardsDetails({boardId:board._id})" class="btn btn-primary">Explore board</a>
+        </div>
+        <div class="card-footer text-muted">
+          <span am-time-ago="board.updatedDate"></span>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
+
+<script type="text/ng-template" id="createBoardModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Create New Board</h3>
+  </div>
+
+  <div class="modal-body">
+    <form name="form" role="form">
+      <div ng-show="showError" class="alert alert-danger" role="alert">
+        <strong>Error! </strong> {{error}}
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" ng-model="board.name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" name="description" class="form-control" ng-model="board.description" required>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button ng-disabled="!(form.name.$valid && form.description.$valid)" class="btn btn-primary" type="button" ng-click="ok(board)">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="editBoardModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Update Board</h3>
+  </div>
+
+  <div class="modal-body">
+    <form name="form" role="form">
+      <div ng-show="showError" class="alert alert-danger" role="alert">
+        <strong>Error! </strong> {{error}}
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" ng-model="board.name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" name="description" class="form-control" ng-model="board.description" required>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button ng-disabled="!(form.name.$valid && form.description.$valid)" class="btn btn-primary" type="button" ng-click="ok(board)">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</script>

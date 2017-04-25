@@ -81,3 +81,20 @@ body {
     border-bottom: 0;
   }
 }
+
+.padding {
+  padding: 20px;
+}
+
+.padding-right {
+  padding-right: 20px;
+}
+
+.margin {
+  margin: 5px;
+}
+
+.cursor {
+  cursor: pointer;
+  left: 5px;
+}

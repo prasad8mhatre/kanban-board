@@ -12,7 +12,11 @@ var app = angular.module('kanbanApp', [
   'ui.router',
   'ncy-angular-breadcrumb',
   'angular-loading-bar',
-  'dndLists'
+  'dndLists',
+  'ui.bootstrap',
+  'angularMoment',
+  'toastr'
+
 ]);
 
 
@@ -59,7 +63,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
   });
 
   $stateProvider.state('app.home.teams.boards', {
-    url: '/boards',
+    url: '/boards/:teamId',
     templateUrl: 'views/home/boards.html',
     controller: 'BoardsCtrl',
     data: {
@@ -67,7 +71,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
     },
     ncyBreadcrumb: {
       label: 'Boards'
-    }
+    },
+   resolve:{
+      teamId: ['$stateParams', function($stateParams){
+          return $stateParams.teamId;
+      }]
+   }
   }).state('app.home.teams.boards.boardsDetails', {
     url: '/board/:boardId',
     templateUrl: 'views/home/board.html',
@@ -100,4 +109,4 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/app/home');
 });
 
-app.constant('serverUrl', 'localhost:3000');
+app.constant('serverUrl', 'http://localhost:3000/');

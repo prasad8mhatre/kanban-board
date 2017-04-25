@@ -1,33 +1,79 @@
-<style>
-  .padding {
-    padding: 20px;
-  }
-
-  .padding-right {
-    padding-right: 20px;
-  }
-
-  .margin {
-    margin: 5px;
-  }
-</style>
 <div ui-view>
-  <h3>Teams <span class="glyphicon glyphicon-plus" ng-click="addTeam()"></span></h3>
+  <div class="alert alert-danger" role="alert" ng-show="showError">
+    <div>{{error}}</div>
+  </div>
+  <h3><span>Teams</span><span class="glyphicon glyphicon-plus cursor" ng-click="addTeam()"></span></h3>
   <div class="row">
     <div ng-repeat="team in teams" class="col-md-4">
       <div class="card text-center padding margin" style="background:#ebebeb; ">
         <div class="card-header">
-          {{team}} <span class="pull-right glyphicon glyphicon-trash "></span><span class="pull-right padding-right glyphicon glyphicon-pencil"></span>
+          <span class="pull-right glyphicon glyphicon-trash cursor" ng-click="deleteTeam(team)"></span><span class="pull-right padding-right glyphicon glyphicon-pencil cursor" ng-click="editTeam(team)"></span>
         </div>
         <div class="card-block">
-          <h4 class="card-title">Manage Teams</h4>
-          <p class="card-text">Create, Delete, View your teams.</p>
-          <a ui-sref="app.home.teams.boards" class="btn btn-primary">Explore Board</a>
+          <h3 for="">{{team.name}}</h3>
+          <h5 class="card-text">{{team.description}}</h5>
+          <a ui-sref="app.home.teams.boards({teamId:team._id})" class="btn btn-primary">Explore Boards</a>
         </div>
         <div class="card-footer text-muted">
-          2 days ago
+          <span am-time-ago="team.updatedDate"></span>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script type="text/ng-template" id="createTeamModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Create New Team</h3>
+  </div>
+
+  <div class="modal-body">
+    <form name="form" role="form">
+      <div ng-show="showError" class="alert alert-danger" role="alert">
+        <strong>Error! </strong> {{error}}
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" ng-model="team.name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" name="description" class="form-control" ng-model="team.description" required>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button ng-disabled="!(form.name.$valid && form.description.$valid)" class="btn btn-primary" type="button" ng-click="ok(team)">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="editTeamModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Update Team</h3>
+  </div>
+
+  <div class="modal-body">
+    <form name="form" role="form">
+      <div ng-show="showError" class="alert alert-danger" role="alert">
+        <strong>Error! </strong> {{error}}
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" ng-model="team.name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" name="description" class="form-control" ng-model="team.description" required>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button ng-disabled="!(form.name.$valid && form.description.$valid)" class="btn btn-primary" type="button" ng-click="ok(team)">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</script>

@@ -22,7 +22,7 @@ var ListSchema = new Schema({
 
 ListSchema.statics = {
 
-     
+
     get: function(query, callback) {
         this.findOne(query, callback);
     },
@@ -37,6 +37,8 @@ ListSchema.statics = {
     },
     create: function(data, callback) {
         var list = new this(data);
+        list.createdDate = new Date();
+        list.updatedDate = new Date();
         list.save(callback);
     }
 }

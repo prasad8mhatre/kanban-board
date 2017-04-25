@@ -14,14 +14,14 @@ var BoardSchema = new Schema({
   createdDate :  Date,
   updatedDate : Date,
   lists : [{ type: Schema.Types.ObjectId, ref: 'List' }],
-  orderedOn : { type: String }
-
+  orderedOn : { type: String },
+  teamId : { type: String }
 });
 
 
 BoardSchema.statics = {
 
-     
+
     get: function(query, callback) {
         this.findOne(query, callback);
     },
@@ -36,6 +36,8 @@ BoardSchema.statics = {
     },
     create: function(data, callback) {
         var board = new this(data);
+        board.createdDate = new Date();
+        board.updatedDate = new Date();
         board.save(callback);
     }
 }
