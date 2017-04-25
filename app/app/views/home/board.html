@@ -1,1 +1,96 @@
-in boardX
+<style media="screen">
+  .dragndrop ul[dnd-list] {
+    min-height: 42px;
+    padding-left: 0px;
+  }
+  /**
+* The dndDraggingSource class will be applied to
+* the source element of a drag operation. It makes
+* sense to hide it to give the user the feeling
+* that he's actually moving it.
+*/
+
+  .dragndrop ul[dnd-list] .dndDraggingSource {
+    display: none;
+  }
+  /**
+* An element with .dndPlaceholder class will be
+* added to the dnd-list while the user is dragging
+* over it.
+*/
+
+  .dragndrop ul[dnd-list] .dndPlaceholder {
+    background-color: #ddd;
+    display: block;
+    min-height: 42px;
+  }
+
+  .dragndrop ul[dnd-list] li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+  }
+  /**
+* Show selected elements in green
+*/
+
+  .dragndrop ul[dnd-list] li.selected {
+    background-color: #dff0d8;
+    color: #3c763d;
+  }
+
+  .padding {
+    padding: 20px;
+  }
+
+  .margin {
+    margin: 5px;
+  }
+</style>
+
+<div class="page-title">
+  <span>{{boardId}}</span>
+  <span class="glyphicon glyphicon-plus margin"></span>
+</div>
+
+<div class="dragndrop">
+  <div class="row">
+    <ul dnd-list="models.lists">
+      <li ng-repeat="category in models.lists"
+      dnd-draggable="category"
+      dnd-droppable-in=".categories"
+      dnd-effect-allowed="move"
+      dnd-moved="models.lists.splice($index, 1)"
+      class="col-md-4">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <label class="panel-title">{{category.name}}</label>
+            <span class="pull-right glyphicon glyphicon-trash margin"></span>
+            <span class="pull-right glyphicon glyphicon-edit margin"></span>
+            <span class="pull-right glyphicon glyphicon-sort margin"></span>
+            <span class="pull-right glyphicon glyphicon-plus margin"></span>
+          </div>
+          <div class="panel-body">
+            <ul dnd-list="category.items" class="items">
+              <li ng-repeat="item in category.items"
+                  dnd-draggable="item"
+                  dnd-droppable-in=".items"
+                  dnd-effect-allowed="move"
+                  dnd-selected="models.selected = item"
+                  dnd-moved="category.items.splice($index, 1)"
+                  ng-class="{'selected': models.selected === item}">
+                <span style="font-size:16px">{{ item.name }}</span>
+                <span class="pull-right glyphicon glyphicon-trash margin"></span>
+                <span class="pull-right glyphicon glyphicon-edit margin"></span>
+                <span style="display: block;">{{item.description}}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </ul>
+  </div>
+</div>
