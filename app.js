@@ -75,6 +75,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+const passportConfig = require('./config/passport');
 /*app.use((req, res, next) => {
   if (req.path === '/api/upload') {
     next();
@@ -110,8 +111,10 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
 const routes = require('./routes/routes');
 const api = require('./routes/api');
 app.use('/', routes);
-app.use('/app', express.static(__dirname + '/app/app'));
-app.use('/api', api);
+
+//interscepting api and app with authenticated check
+app.use('/app', passportConfig.isAuthenticated, express.static(__dirname + '/app/app'));
+app.use('/api', passportConfig.isAuthenticated, api);
 
 
 /**
