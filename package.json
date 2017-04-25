@@ -9,7 +9,7 @@
   "author": "Prasad Mhatre",
   "license": "Apache License 2.0",
   "scripts": {
-    "start": "node app.js",
+    "start": "node app.js && cd app/app || bower install",
     "test": "mocha --reporter spec",
     "postinstall": "npm rebuild node-sass"
   },
