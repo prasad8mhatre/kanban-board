@@ -112,4 +112,4 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/app/home');
 });
 
-app.constant('serverUrl', 'http://localhost:3000/');
+app.constant('serverUrl', 'https://pure-tor-16517.herokuapp.com/');
