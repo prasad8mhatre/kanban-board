@@ -4,7 +4,15 @@
   </div>
   <h3><span>Teams</span><span class="glyphicon glyphicon-plus cursor" ng-click="addTeam()"></span></h3>
   <div class="row">
-    <div ng-repeat="team in teams" class="col-md-4">
+      <div class="col-md-4">
+        <div class="form-group">
+          <input type="text" class="form-control" ng-model="searchString"  placeholder="Search">
+        </div>
+      </div>
+  </div>
+
+  <div class="row">
+    <div ng-repeat="team in teams | filter:searchString" class="col-md-4">
       <div class="card text-center padding margin" style="background:#ebebeb; ">
         <div class="card-header">
           <span class="pull-right glyphicon glyphicon-trash cursor" ng-click="deleteTeam(team)"></span><span class="pull-right padding-right glyphicon glyphicon-pencil cursor" ng-click="editTeam(team)"></span>

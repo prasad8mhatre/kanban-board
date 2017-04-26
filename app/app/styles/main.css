@@ -147,3 +147,10 @@ body {
 .margin {
   margin: 5px;
 }
+
+@media (min-width: 768px)
+.navbar-form .form-control {
+    display: inline-block;
+    width: 200px;
+    vertical-align: middle;
+}

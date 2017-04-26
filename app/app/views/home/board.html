@@ -2,11 +2,18 @@
   <span><label for="board">Board:</label> {{board.name}}</span>
   <span class="glyphicon glyphicon-plus margin cursor" ng-click="addList()"></span>
 </div>
+<div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <input type="text" class="form-control" ng-model="searchString"  placeholder="Search">
+      </div>
+    </div>
+</div>
 
 <div class="dragndrop">
   <div class="row">
     <ul dnd-list="listModels.lists">
-      <li ng-repeat="list in listModels.lists" dnd-draggable="list" dnd-droppable-in=".lists" dnd-effect-allowed="move" dnd-moved="listModels.lists.splice($index, 1)" class="col-xs-12 col-md-3 col-lg-3">
+      <li ng-repeat="list in listModels.lists  | filter:searchString" dnd-draggable="list" dnd-droppable-in=".lists" dnd-effect-allowed="move" dnd-moved="listModels.lists.splice($index, 1)" class="col-xs-12 col-md-3 col-lg-3">
         <div class="panel panel-info">
           <div class="panel-heading">
             <label class="panel-title">{{list.name}} </label>
@@ -17,7 +24,7 @@
           </div>
           <div class="panel-body">
             <ul dnd-list="list.items" class="items">
-              <li ng-repeat="item in list.items"
+              <li ng-repeat="item in list.items | filter:searchString"
               dnd-draggable="item"
               dnd-droppable-in=".items"
               dnd-effect-allowed="move"

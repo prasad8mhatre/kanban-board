@@ -30,7 +30,7 @@ exports.get = function(req, res) {
 
 exports.getAll = function(req, res) {
 
-  Team.find().sort({
+  Team.find({updatedBy: req.user.email}).sort({
     updatedDate: -1
   }).find(function(err, result) {
     if (!err) {

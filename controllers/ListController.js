@@ -32,7 +32,7 @@ exports.get = function(req, res) {
 exports.getAll = function(req, res) {
 
 
-  List.find({boardId: req.params.boardId}).sort().find(function(err, result) {
+  List.find({boardId: req.params.boardId, updatedBy: req.user.email}).sort().find(function(err, result) {
     if (!err) {
       return res.json(result);
     } else {

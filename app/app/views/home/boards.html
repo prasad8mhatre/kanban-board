@@ -1,7 +1,15 @@
 <div ui-view>
   <h3>Board <span class="glyphicon glyphicon-plus cursor" ng-click="addBoard()"></span></h3>
   <div class="row">
-    <div ng-repeat="board in boards" class="col-md-4">
+      <div class="col-md-4">
+        <div class="form-group">
+          <input type="text" class="form-control" ng-model="searchString"  placeholder="Search">
+        </div>
+      </div>
+  </div>
+
+  <div class="row">
+    <div ng-repeat="board in boards  | filter:searchString" class="col-md-4">
       <div class="card text-center padding margin" style="background:#ebebeb; ">
         <div class="card-header">
           <span class="pull-right glyphicon glyphicon-trash cursor" ng-click="deleteBoard(board)"></span><span class="pull-right padding-right glyphicon glyphicon-pencil cursor" ng-click="editBoard(board)"></span>

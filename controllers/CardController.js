@@ -44,7 +44,7 @@ exports.getAllOrderby = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
-  Card.find({listId: req.params.listId}).sort({updatedDate: -1}).find(function (err, result) {
+  Card.find({listId: req.params.listId, updatedBy: req.user.email}).sort({updatedDate: -1}).find(function (err, result) {
       if (!err) {
           return res.json(result);
       } else {

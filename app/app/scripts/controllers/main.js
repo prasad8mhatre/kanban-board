@@ -15,6 +15,11 @@ app.controller('MainCtrl', ['$scope', '$state','serverUrl','AuthService', functi
   AuthService.getCurrentUser().then(function(resp) {
       $scope.User = resp.data;
   })
+
+  $scope.showResult = function(){
+    alert('sdsd');
+  }
+
 }]);
 
 
