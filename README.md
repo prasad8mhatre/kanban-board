@@ -7,6 +7,7 @@ Steps to install:-
 3. nodemon - start this application on port localhost:3000
 4. Create new account & start using it.
 5. change your server URL in frontend app/app/app.js to http://localhost:3000/ for running it locally.
+5. Run testcase:- npm test
 
 Project structure:-
 .
