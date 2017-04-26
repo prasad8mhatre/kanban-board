@@ -28,12 +28,13 @@ exports.get = function (req, res) {
 };
 
 exports.getAllOrderby = function (req, res) {
-    var orderType = req.query.orderType;
-    var order = req.query.order;
-    var sort = "{\"" + orderType + "\":\"" +  order + "\"}";
+    var orderType = req.body.orderType;
+    var order = req.body.order;
+    var sort = "{\"" + orderType + "\":" +  order + "}";
     console.log(sort);
 
-    Card.find().sort(JSON.parse(sort)).find(function (err, result) {
+    Card.find({listId: req.body.listId}).sort(JSON.parse(sort)).find(function (err, result) {
+        console.log(result);
         if (!err) {
             return res.json(result);
         } else {
@@ -59,13 +60,22 @@ exports.getAllOrderby = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
-  Card.find({ListId: req.params.ListId}).sort().find(function(err, result) {
-    if (!err) {
-      return res.json(result);
-    } else {
-      return res.send(err); // 500 error
-    }
+  console.log("in getall");
+  Card.find({listId: req.params.listId}).sort({updatedDate: -1}).find(function (err, result) {
+      if (!err) {
+          return res.json(result);
+      } else {
+          return res.send(err); // 500 error
+      }
   });
+
+  // Card.find({listId: req.params.listId}).sort().exec(function(err, result) {
+  //   if (!err) {
+  //     return res.json(result);
+  //   } else {
+  //     return res.send(err); // 500 error
+  //   }
+  // });
 
 };
 
@@ -80,12 +90,15 @@ exports.update = function (req, res) {
 }
 
 exports.delete = function (req, res) {
-    Card.removeById({_id: req.params.id}, function(err, result) {
-        if (!err) {
-            return res.json(result);
-        } else {
-            console.log(err);
-            return res.send(err); // 500 error
-        }
+
+    Card.find().remove({
+      _id: req.params.id
+    }).remove(function(err, result) {
+      if (!err) {
+        return res.json(result);
+      } else {
+        console.log(err);
+        return res.send(err); // 500 error
+      }
     });
 }

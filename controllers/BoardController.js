@@ -17,8 +17,6 @@ exports.create = function(req, res) {
 };
 
 exports.get = function(req, res) {
-  debugger;
-  console.log("in get")
   Board.get({
     _id: req.params.id
   }, function(err, result) {
@@ -31,7 +29,7 @@ exports.get = function(req, res) {
 };
 
 exports.getAll = function(req, res) {
-  Board.find({teamId: req.params.teamId}).sort({
+  Board.find({listId: req.params.listId}).sort({
     updatedDate: -1
   }).find(function(err, result) {
     if (!err) {

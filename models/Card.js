@@ -23,7 +23,7 @@ var CardSchema = new Schema({
   updatedDate: Date,
   dueDate: Date,
   priority: Number,
-  ListId : String
+  listId : String
 
 });
 

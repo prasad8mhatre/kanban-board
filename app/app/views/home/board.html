@@ -12,15 +12,20 @@
             <label class="panel-title">{{list.name}} </label>
             <span class="pull-right glyphicon glyphicon-trash margin cursor" ng-click="deleteList(list)"></span>
             <span class="pull-right glyphicon glyphicon-edit margin cursor" ng-click="editList(list)"></span>
-            <span class="pull-right glyphicon glyphicon-sort margin cursor" ng-click="sortCards()"></span>
+            <span class="pull-right glyphicon glyphicon-sort margin cursor" ng-click="sortCards(list)"></span>
             <span class="pull-right glyphicon glyphicon-plus margin cursor" ng-click="addCard(list.name)"></span>
           </div>
           <div class="panel-body">
-            <ul dnd-list="category.items" class="items">*****{{category.items}}
-              <li ng-repeat="item in category.items" dnd-draggable="item" dnd-droppable-in=".items" dnd-effect-allowed="move" dnd-selected="listModels.selected = item" dnd-moved="category.items.splice($index, 1)" ng-class="{'selected': listModels.selected === item}">
+            <ul dnd-list="list.items" class="items">
+              <li ng-repeat="item in list.items"
+              dnd-draggable="item"
+              dnd-droppable-in=".items"
+              dnd-effect-allowed="move"
+              dnd-moved="list.items.splice($index, 1)"
+              >
                 <span style="font-size:16px">{{ item.name }}</span>
-                <span class="pull-right glyphicon glyphicon-trash margin"></span>
-                <span class="pull-right glyphicon glyphicon-edit margin"></span>
+                <span class="pull-right glyphicon glyphicon-trash margin cursor" ng-click="deleteCard(item)"></span>
+                <span class="pull-right glyphicon glyphicon-edit margin cursor" ng-click="editCard(item)"></span>
                 <span style="display: block;">{{item.description}}</span>
               </li>
             </ul>
@@ -167,7 +172,43 @@
   </div>
 
   <div class="modal-footer">
-    <button ng-disabled="!(form.name.$valid && form.description.$valid  && form.dueDate.$valid && form.priority.$valid)" class="btn btn-primary" type="button" ng-click="ok(card)">OK</button>
+    <button ng-disabled="!(form.name.$valid && form.description.$valid)" class="btn btn-primary" type="button" ng-click="ok(card)">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="sortCardModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Sort Task Criteria</h3>
+  </div>
+
+  <div class="modal-body">
+    <form name="form" role="form">
+      <div ng-show="showError" class="alert alert-danger" role="alert">
+        <strong>Error! </strong> {{error}}
+      </div>
+      <div class="form-group">
+        <label>Sort Field</label>
+        <div bs-dropdown
+			       bs-dropdown-display="Sort Field"
+				     bs-dropdown-items="field"
+			       ng-model="order.field"
+			       ng-change="changeField()"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Sort order</label>
+        <div bs-dropdown
+			       bs-dropdown-display="Priority"
+				     bs-dropdown-items="sortOrder"
+			       ng-model="order.sortOrder"
+			       ng-change="changeOrder()"></div>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button  class="btn btn-primary" type="button" ng-click="ok(order)">OK</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
   </div>
 </script>
