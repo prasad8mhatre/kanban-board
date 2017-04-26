@@ -15,7 +15,9 @@ var app = angular.module('kanbanApp', [
   'dndLists',
   'ui.bootstrap',
   'angularMoment',
-  'toastr'
+  'toastr',
+  'ui.bootstrap.datetimepicker',
+  'ng.bs.dropdown'
 
 ]);
 

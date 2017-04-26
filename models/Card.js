@@ -22,7 +22,8 @@ var CardSchema = new Schema({
   createdDate: Date,
   updatedDate: Date,
   dueDate: Date,
-  priority: Number
+  priority: Number,
+  ListId : String
 
 });
 

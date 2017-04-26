@@ -1,8 +1,10 @@
-app.controller('BoardCtrl', ['$scope', '$state', 'boardId', 'EntityService', '$uibModal', 'ListService', '$timeout', function($scope, $state, boardId, EntityService, $uibModal, ListService, $timeout) {
+app.controller('BoardCtrl', ['$scope', '$state', 'boardId', 'EntityService', '$uibModal', 'ListService', '$timeout', 'CardService', function($scope, $state, boardId, EntityService, $uibModal, ListService, $timeout, CardService) {
 
   console.log("In BoardCtrl ");
   $scope.boardId = boardId;
   $scope.entity = "list";
+
+
 
 
   EntityService.getById("board", boardId).then(function(resp) {
@@ -31,7 +33,12 @@ app.controller('BoardCtrl', ['$scope', '$state', 'boardId', 'EntityService', '$u
       angular.forEach($scope.lists, function(val, key) {
         var tempList = {};
         tempList.name = val.name;
-        //tempList.items = val.cards;
+        debugger;
+        CardService.getAll("card", val._id).then(function(resp) {
+          debugger;
+          tempList.items = resp.data;
+        })
+        //t
         $scope.listModels.lists.push(tempList);
       });
 
@@ -125,8 +132,84 @@ app.controller('BoardCtrl', ['$scope', '$state', 'boardId', 'EntityService', '$u
     });
   }
 
+  //For Cards
+
+  $scope.addCard = function(listName) {
+    debugger;
+    angular.forEach($scope.lists, function(val, key) {
+      if (val.name == listName) {
+        list = angular.copy(val);
+      }
+    });
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'createCardModal.html',
+      controller: 'CreateCardCtrl',
+      resolve: {
+        ListId: function() {
+          return list._id;
+        }
+      }
+    });
+
+    modalInstance.result.then(function(selectedItem) {
+      $scope.selected = selectedItem;
+    }, function() {
+      $scope.refresh();
+    });
+  }
 
 
+  $scope.deleteCard = function(card) {
+    angular.forEach($scope.lists, function(val, key) {
+      if (val.name == list.name) {
+        card = angular.copy(val);
+      }
+    });
+    EntityService.delete($scope.entity, card._id).then(function(resp) {
+      EntityService.showSuccessMsg("List: " + EntityService.titleCase()(card.name) + " Deleted Successfully");
+      $scope.refresh();
+
+    }, function(error) {
+      $scope.error = error;
+      $scope.showError = true;
+      $timeout(function() {
+        $scope.showError = false;
+      }, 5000);
+    });
+  }
+
+  $scope.editCard = function(card) {
+
+    angular.forEach($scope.lists, function(val, key) {
+      if (val.name == list.name) {
+        card = angular.copy(val);
+      }
+    });
+
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'editCardModal.html',
+      controller: 'EditCardCtrl',
+      resolve: {
+        card: function() {
+          return card;
+        }
+      }
+    });
+
+    modalInstance.result.then(function(selectedItem) {
+      $scope.selected = selectedItem;
+    }, function() {
+      $scope.refresh();
+    });
+  }
+
+
+  //SortCards
+  $scope.sortCards =  function() {
+
+  }
 
 
 
@@ -263,6 +346,93 @@ app.controller('EditListCtrl', ['$scope', '$state', '$uibModalInstance', 'Entity
   }
 ]);
 
+// Cards
+
+app.controller('CreateCardCtrl', ['$scope', '$state', '$uibModalInstance', 'EntityService', '$timeout', 'ListId',
+  function($scope, $state, $uibModalInstance, EntityService, $timeout, ListId) {
+    $scope.card = {};
+    $scope.card.dueDate = new Date();
+    $scope.entity = "card";
+    $scope.priorities = ["1","2","3","4","5"];
+    $scope.changePriority = function(){
+
+    }
+    debugger;
+    $scope.ok = function(card) {
+      if (angular.isUndefined(card.name) && angular.isUndefined(card.description)) {
+        $scope.error = "Please Enter Name and description!";
+        $scope.showError = true;
+        $timeout(function() {
+          $scope.showError = false;
+        }, 5000);
+      } else {
+        debugger;
+        $scope.card = card;
+        $scope.card.ListId = ListId;
+        EntityService.add($scope.entity, $scope.card)
+          .then(function(resp) {
+            $uibModalInstance.dismiss('cancel');
+            EntityService.showSuccessMsg("Board: " + EntityService.titleCase()($scope.card.name) + " Created Successfully");
+            //EntityService.showSuccessMsg("PivotGrids Copied Successfully");
+          }, function(error) {
+            $scope.error = error.data.message;
+            $scope.showError = true;
+            $timeout(function() {
+              $scope.showError = false;
+            }, 5000);
+            console.log(error.data.developerMessage);
+          });
+      }
+
+    };
+
+    $scope.cancel = function() {
+      $scope.board = {};
+      $uibModalInstance.dismiss('cancel');
+    };
+
+  }
+]);
+
+
+app.controller('EditListCtrl', ['$scope', '$state', '$uibModalInstance', 'EntityService', '$timeout', 'card',
+  function($scope, $state, $uibModalInstance, EntityService, $timeout, card) {
+    $scope.card = card;
+    $scope.entity = "card";
+    $scope.ok = function(newCard) {
+      if (angular.isUndefined(newCard.name) && angular.isUndefined(newCard.description)) {
+        $scope.error = "Please Enter Name and description!";
+        $scope.showError = true;
+        $timeout(function() {
+          $scope.showError = false;
+        }, 5000);
+      } else {
+        $scope.card = newcard;
+        EntityService.update($scope.entity, $scope.card._id, $scope.card)
+          .then(function(resp) {
+            $uibModalInstance.dismiss('cancel');
+            EntityService.showSuccessMsg("List: " + EntityService.titleCase()($scope.card.name) + " Updated Successfully");
+          }, function(error) {
+            $scope.error = error.data.message;
+            $scope.showError = true;
+            $timeout(function() {
+              $scope.showError = false;
+            }, 5000);
+            console.log(error.data.developerMessage);
+          });
+      }
+
+    };
+
+    $scope.cancel = function() {
+      $scope.list = {};
+      $uibModalInstance.dismiss('cancel');
+    };
+  }
+]);
+
+
+
 
 //Service for controller
 app.service('ListService', ['$http', 'serverUrl', function($http, serverUrl) {
@@ -270,6 +440,16 @@ app.service('ListService', ['$http', 'serverUrl', function($http, serverUrl) {
     return $http({
       method: 'GET',
       url: serverUrl + "api/" + entityName + "/getAll/" + teamId
+    });
+  };
+
+}]);
+
+app.service('CardService', ['$http', 'serverUrl', function($http, serverUrl) {
+  this.getAll = function(entityName, listId) {
+    return $http({
+      method: 'GET',
+      url: serverUrl + "api/" + entityName + "/getAll/" + listId
     });
   };
 

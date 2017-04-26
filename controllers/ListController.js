@@ -1,6 +1,7 @@
 'use strict';
 
 var List = require('../models/List').List;
+var Card = require('../models/Card').Card;
 
 exports.create = function(req, res) {
   req.body.createdBy = req.user.email;
@@ -29,6 +30,8 @@ exports.get = function(req, res) {
 };
 
 exports.getAll = function(req, res) {
+
+
   List.find({boardId: req.params.boardId}).sort().find(function(err, result) {
     if (!err) {
       return res.json(result);

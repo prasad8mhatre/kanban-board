@@ -1,6 +1,7 @@
 'use strict';
 
 var Card = require('../models/Card').Card;
+var List = require('../models/List').List;
 
 exports.create = function (req, res) {
     req.body.createdBy = req.user.email;
@@ -58,13 +59,14 @@ exports.getAllOrderby = function (req, res) {
 };
 
 exports.getAll = function (req, res) {
-    Card.getAll({}, function(err, result) {
-        if (!err) {
-            return res.json(result);
-        } else {
-            return res.send(err); // 500 error
-        }
-    });
+  Card.find({ListId: req.params.ListId}).sort().find(function(err, result) {
+    if (!err) {
+      return res.json(result);
+    } else {
+      return res.send(err); // 500 error
+    }
+  });
+
 };
 
 exports.update = function (req, res) {

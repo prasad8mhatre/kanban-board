@@ -6,28 +6,18 @@
 <div class="dragndrop">
   <div class="row">
     <ul dnd-list="listModels.lists">
-      <li ng-repeat="list in listModels.lists"
-          dnd-draggable="list"
-          dnd-droppable-in=".lists"
-          dnd-effect-allowed="move"
-          dnd-moved="listModels.lists.splice($index, 1)" class="col-xs-12 col-md-3 col-lg-3">
+      <li ng-repeat="list in listModels.lists" dnd-draggable="list" dnd-droppable-in=".lists" dnd-effect-allowed="move" dnd-moved="listModels.lists.splice($index, 1)" class="col-xs-12 col-md-3 col-lg-3">
         <div class="panel panel-info">
           <div class="panel-heading">
             <label class="panel-title">{{list.name}} </label>
             <span class="pull-right glyphicon glyphicon-trash margin cursor" ng-click="deleteList(list)"></span>
             <span class="pull-right glyphicon glyphicon-edit margin cursor" ng-click="editList(list)"></span>
-            <span class="pull-right glyphicon glyphicon-sort margin cursor"></span>
-            <span class="pull-right glyphicon glyphicon-plus margin cursor "></span>
+            <span class="pull-right glyphicon glyphicon-sort margin cursor" ng-click="sortCards()"></span>
+            <span class="pull-right glyphicon glyphicon-plus margin cursor" ng-click="addCard(list.name)"></span>
           </div>
           <div class="panel-body">
-            <ul dnd-list="category.items" class="items">
-              <li ng-repeat="item in category.items"
-                  dnd-draggable="item"
-                  dnd-droppable-in=".items"
-                  dnd-effect-allowed="move"
-                  dnd-selected="listModels.selected = item"
-                  dnd-moved="category.items.splice($index, 1)"
-                  ng-class="{'selected': listModels.selected === item}">
+            <ul dnd-list="category.items" class="items">*****{{category.items}}
+              <li ng-repeat="item in category.items" dnd-draggable="item" dnd-droppable-in=".items" dnd-effect-allowed="move" dnd-selected="listModels.selected = item" dnd-moved="category.items.splice($index, 1)" ng-class="{'selected': listModels.selected === item}">
                 <span style="font-size:16px">{{ item.name }}</span>
                 <span class="pull-right glyphicon glyphicon-trash margin"></span>
                 <span class="pull-right glyphicon glyphicon-edit margin"></span>
@@ -92,6 +82,92 @@
 
   <div class="modal-footer">
     <button ng-disabled="!(form.name.$valid && form.description.$valid)" class="btn btn-primary" type="button" ng-click="ok(list)">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</script>
+
+<!--  Cards -->
+<script type="text/ng-template" id="createCardModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Create New Task</h3>
+  </div>
+
+  <div class="modal-body">
+    <form name="form" role="form">
+      <div ng-show="showError" class="alert alert-danger" role="alert">
+        <strong>Error! </strong> {{error}}
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" ng-model="card.name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" name="description" class="form-control" ng-model="card.description" required>
+      </div>
+
+      <div class="form-group">
+        <label>Priority</label>
+        <div bs-dropdown
+			       bs-dropdown-display="Priority"
+				     bs-dropdown-items="priorities"
+			       ng-model="card.priority"
+			       ng-change="changePriority()" name="priority"></div>
+      </div>
+      <div class="form-group">
+        <label>Due Date: {{card.dueDate | date:'MM/dd/yyyy @ h:mma'}}</label>
+        <datetimepicker ng-model="card.dueDate" name="dueDate"></datetimepicker>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button ng-disabled="!(form.name.$valid && form.description.$valid && form.dueDate.$valid && form.priority.$valid) " class="btn btn-primary" type="button" ng-click="ok(card)">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+  </div>
+</script>
+
+<script type="text/ng-template" id="editCardModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Update Task</h3>
+  </div>
+
+  <div class="modal-body">
+    <form name="form" role="form">
+      <div ng-show="showError" class="alert alert-danger" role="alert">
+        <strong>Error! </strong> {{error}}
+      </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" ng-model="card.name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" name="description" class="form-control" ng-model="card.description" required>
+      </div>
+
+      <div class="form-group">
+        <label>Priority</label>
+        <div bs-dropdown
+			       bs-dropdown-display="Priority"
+				     bs-dropdown-items="priorities"
+			       ng-model="card.priority"
+			       ng-change="changePriority()"></div>
+      </div>
+      <div class="form-group">
+        <label>Due Date</label>
+        <datetimepicker ng-model="card.dueDate"></datetimepicker>
+      </div>
+
+
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button ng-disabled="!(form.name.$valid && form.description.$valid  && form.dueDate.$valid && form.priority.$valid)" class="btn btn-primary" type="button" ng-click="ok(card)">OK</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
   </div>
 </script>
