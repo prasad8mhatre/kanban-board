@@ -29,13 +29,14 @@ exports.get = function(req, res) {
 };
 
 exports.getAll = function(req, res) {
-  List.getAll({}, function(err, result) {
+  List.find({boardId: req.params.boardId}).sort().find(function(err, result) {
     if (!err) {
       return res.json(result);
     } else {
       return res.send(err); // 500 error
     }
   });
+
 };
 
 exports.update = function(req, res) {
@@ -49,9 +50,9 @@ exports.update = function(req, res) {
 }
 
 exports.delete = function(req, res) {
-  List.removeById({
+  List.find().remove({
     _id: req.params.id
-  }, function(err, result) {
+  }).remove(function(err, result) {
     if (!err) {
       return res.json(result);
     } else {

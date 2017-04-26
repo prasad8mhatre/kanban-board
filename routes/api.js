@@ -30,7 +30,7 @@ app.delete('/board/:id', passportConfig.isAuthenticated, BoardController.delete)
 //Cardslist
 app.post('/list', passportConfig.isAuthenticated, ListController.create);
 app.get('/list/:id', passportConfig.isAuthenticated, ListController.get);
-app.get('/list', passportConfig.isAuthenticated, ListController.getAll);
+app.get('/list/getAll/:boardId', passportConfig.isAuthenticated, ListController.getAll);
 app.put('/list/:id', passportConfig.isAuthenticated, ListController.update);
 app.delete('/list/:id', passportConfig.isAuthenticated, ListController.delete);
 

@@ -7,11 +7,14 @@
  * # MainCtrl
  * Controller of the kanbanApp
  */
-app.controller('MainCtrl', ['$scope', '$state', function($scope, $state) {
+app.controller('MainCtrl', ['$scope', '$state','serverUrl','AuthService', function($scope, $state, serverUrl, AuthService) {
 
   console.log("In Main Ctrl");
   $scope.Hello = "Hello";
-
+  $scope.serverUrl = serverUrl;
+  AuthService.getCurrentUser().then(function(resp) {
+      $scope.User = resp.data;
+  })
 }]);
 
 
@@ -19,7 +22,7 @@ app.service('AuthService', function($http, serverUrl) {
   this.getCurrentUser = function() {
     return $http({
       method: 'GET',
-      url: serverUrl + "services/session/currentUser"
+      url: serverUrl + "accountDetails"
     });
   };
 
@@ -56,7 +59,7 @@ app.service('EntityService', ['$http', 'serverUrl', 'toastr', function($http, se
     });
   };
 
-  this.get = function(entityName, entityId) {
+  this.getById = function(entityName, entityId) {
     return $http({
       method: 'GET',
       url: serverUrl + "api/" + entityName + "/" + entityId

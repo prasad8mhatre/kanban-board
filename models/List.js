@@ -15,7 +15,8 @@ var ListSchema = new Schema({
   createdDate :  Date,
   updatedDate : Date,
   cards : [{ type: Schema.Types.ObjectId, ref: 'Card' }],
-  position : Number
+  position : Number,
+  boardId : { type: String }
 
 });
 
