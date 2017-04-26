@@ -123,10 +123,10 @@ app.controller('EditTeamCtrl', ['$scope', '$state', '$uibModalInstance', 'Entity
         }, 5000);
       } else {
         $scope.team = newteam;
-        debugger;
+
         EntityService.update($scope.entity, $scope.team._id, $scope.team)
           .then(function(resp) {
-            debugger;
+
             $uibModalInstance.dismiss('cancel');
             EntityService.showSuccessMsg("Team: " + EntityService.titleCase()($scope.team.name) + " Updated Successfully");
             //EntityService.showSuccessMsg("PivotGrids Copied Successfully");

@@ -216,7 +216,7 @@ app.controller('BoardCtrl', ['$scope', '$state', 'boardId', 'EntityService', '$u
 
   //SortCards
   $scope.sortCards = function(list) {
-    debugger;
+
 
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
@@ -392,7 +392,7 @@ app.controller('EditCardCtrl', ['$scope', '$state', '$uibModalInstance', 'Entity
 
     }
     $scope.ok = function(newCard) {
-      debugger;
+
       if (angular.isUndefined(newCard.name) && angular.isUndefined(newCard.description)) {
         $scope.error = "Please Enter Name and description!";
         $scope.showError = true;
@@ -448,7 +448,7 @@ app.controller('SortCardCtrl', ['$scope', '$state', '$uibModalInstance', 'Entity
             list = angular.copy(val);
           }
         });
-        debugger;
+
 
         CardService.getAllOrderby('card', list._id, order.field, convertOrder(order.sortOrder)).then(function(resp) {
 

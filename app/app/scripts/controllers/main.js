@@ -16,10 +16,6 @@ app.controller('MainCtrl', ['$scope', '$state','serverUrl','AuthService', functi
       $scope.User = resp.data;
   })
 
-  $scope.showResult = function(){
-    alert('sdsd');
-  }
-
 }]);
 
 
