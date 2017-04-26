@@ -385,7 +385,7 @@ app.controller('CreateCardCtrl', ['$scope', '$state', '$uibModalInstance', 'Enti
 app.controller('EditCardCtrl', ['$scope', '$state', '$uibModalInstance', 'EntityService', '$timeout', 'card',
   function($scope, $state, $uibModalInstance, EntityService, $timeout, card) {
     $scope.card = card;
-    debugger
+
     $scope.priorities = ["1", "2", "3", "4", "5"];
     $scope.entity = "card";
     $scope.changePriority = function() {
