@@ -31,7 +31,6 @@ exports.getAllOrderby = function (req, res) {
     var orderType = req.body.orderType;
     var order = req.body.order;
     var sort = "{\"" + orderType + "\":" +  order + "}";
-    console.log(sort);
 
     Card.find({listId: req.body.listId}).sort(JSON.parse(sort)).find(function (err, result) {
         console.log(result);
@@ -42,25 +41,9 @@ exports.getAllOrderby = function (req, res) {
         }
     });
 
-    // Card.find({}).sort({createdDate: -1}).execFind(function(err,result){
-    //     if (!err) {
-    //         return res.json(result);
-    //     } else {
-    //         return res.send(err); // 500 error
-    //     }
-    // });
-/*
-    Card.find().sort({createdDate:-1}, function(err, result){
-        if (!err) {
-            return res.json(result);
-        } else {
-            return res.send(err); // 500 error
-        }
-    });*/
 };
 
 exports.getAll = function (req, res) {
-  console.log("in getall");
   Card.find({listId: req.params.listId}).sort({updatedDate: -1}).find(function (err, result) {
       if (!err) {
           return res.json(result);
@@ -69,24 +52,13 @@ exports.getAll = function (req, res) {
       }
   });
 
-  // Card.find({listId: req.params.listId}).sort().exec(function(err, result) {
-  //   if (!err) {
-  //     return res.json(result);
-  //   } else {
-  //     return res.send(err); // 500 error
-  //   }
-  // });
-
 };
 
 exports.update = function (req, res) {
-    Card.updateById(req.params.id, req.body, function(err, result) {
-        if (!err) {
-            return res.json(result);
-        } else {
-            return res.send(err); // 500 error
-        }
-    });
+  Card.findOneAndUpdate({ _id: req.params.id }, req.body, {upsert:true}, function(err, doc){
+    if (err) return res.send(500, { error: err });
+    return res.json(doc);
+  });
 }
 
 exports.delete = function (req, res) {

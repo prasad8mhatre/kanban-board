@@ -43,13 +43,12 @@ exports.getAll = function(req, res) {
 };
 
 exports.update = function(req, res) {
-  Team.updateById(req.params.id, req.body, function(err, result) {
-    if (!err) {
-      return res.json(result);
-    } else {
-      return res.send(err); // 500 error
-    }
+
+  Team.findOneAndUpdate({ _id: req.params.id }, req.body, {upsert:true}, function(err, doc){
+    if (err) return res.send(500, { error: err });
+    return res.json(doc);
   });
+
 }
 
 exports.delete = function(req, res) {

@@ -68,7 +68,7 @@ app.service('EntityService', ['$http', 'serverUrl', 'toastr', function($http, se
 
   this.update = function(entityName, entityId, entity) {
     return $http({
-      method: 'PUT',
+      method: 'POST',
       url: serverUrl + "api/" + entityName + "/" + entityId,
       data: entity
     });

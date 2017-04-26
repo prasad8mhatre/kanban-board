@@ -4,9 +4,6 @@ app.controller('BoardCtrl', ['$scope', '$state', 'boardId', 'EntityService', '$u
   $scope.boardId = boardId;
   $scope.entity = "list";
 
-
-
-
   EntityService.getById("board", boardId).then(function(resp) {
     $scope.board = resp.data;
   }, function(error) {
@@ -407,7 +404,7 @@ app.controller('EditCardCtrl', ['$scope', '$state', '$uibModalInstance', 'Entity
         EntityService.update($scope.entity, $scope.card._id, $scope.card)
           .then(function(resp) {
             $uibModalInstance.dismiss('cancel');
-            EntityService.showSuccessMsg("Card: " + EntityService.titleCase()($scope.card.name) + " Updated Successfully");
+            EntityService.showSuccessMsg("Task: " + EntityService.titleCase()($scope.card.name) + " Updated Successfully");
           }, function(error) {
             $scope.error = error.data.message;
             $scope.showError = true;
@@ -459,7 +456,7 @@ app.controller('SortCardCtrl', ['$scope', '$state', '$uibModalInstance', 'Entity
             data: resp.data,
             order: $scope.order
           });
-          EntityService.showSuccessMsg("Card: " + EntityService.titleCase()($scope.list.name) + " Sorted Successfully");
+          EntityService.showSuccessMsg("Task: " + EntityService.titleCase()($scope.list.name) + " Sorted Successfully");
         });
       }
     };
