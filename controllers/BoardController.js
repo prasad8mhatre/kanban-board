@@ -29,7 +29,7 @@ exports.get = function(req, res) {
 };
 
 exports.getAll = function(req, res) {
-  Board.find({listId: req.params.listId, updatedBy: req.user.email}).sort({
+  Board.find({teamId: req.params.teamId, updatedBy: req.user.email}).sort({
     updatedDate: -1
   }).find(function(err, result) {
     if (!err) {
